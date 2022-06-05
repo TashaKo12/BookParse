@@ -29,18 +29,21 @@ def parse_book(number_book, url_book, template_url):
     comments_book = soup.find_all("div", class_="texts")
     comments_book_texts = [comment_book.find("span", class_="black").text 
                            for comment_book in comments_book]
-  
+
+    book_genre = soup.find("span", class_="d_book").find_all("a")
+    book_genres = [genre_tag.text for genre_tag in book_genre]
+
+
     book_parametrs ={
         "Название": title_book.strip(),
         "Автор": avtor_book.strip(),
         "Картинка": full_image_url,
         "Комментарии": comments_book_texts,
+        "Жанр": book_genres,
 
     }
     
     return book_parametrs
-
-    #post_text = soup.find(class_="entry-content").text
 
 
 def save_book(response, filename, number_book, folder='books/'):

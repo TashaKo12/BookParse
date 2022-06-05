@@ -1,5 +1,6 @@
 import os
 import pathlib
+import argparse
 
 
 import requests
@@ -64,19 +65,28 @@ def download_image(image_url, folder="images/"):
 
     with open(unquote(filepath), "wb") as file:
         file.write(response.content)
-    return f"Картинка: {filepath}"
+    return filepath
 
 
 
 def main():
-    
+    parser = argparse.ArgumentParser(
+        description= "Проект скачивает книги и соответствующие им картинки,\
+                     а также выводит дополнительную информацию "
+    )
+    parser.add_argument("--start_id", type=int,
+                        help="Стартовая книга для скачивания", default=1)
+    parser.add_argument("--end_id", type=int,
+                        help="Конечная книга для скачивания", default=10)
+    args = parser.parse_args()
+
+
     template_img_url = "http://tululu.org/images/nopic.gif"
     url_book = "https://tululu.org/b{}/"
     link_download_book = "https://tululu.org/txt.php"
 
-    
 
-    for number_book in range(1, 11):
+    for number_book in range(args.start_id, args.end_id):
         
         params = {"id": number_book}
         response = requests.get(link_download_book, params)
@@ -94,5 +104,4 @@ def main():
 
 
 if __name__ == "__main__":
-    
     main()

@@ -26,10 +26,16 @@ def parse_book(number_book, url_book, template_url):
     image_url = soup.find("div", class_="bookimage").find("img")["src"]
     full_image_url = urljoin(template_url, image_url)
 
+    comments_book = soup.find_all("div", class_="texts")
+    comments_book_texts = [comment_book.find("span", class_="black").text 
+                           for comment_book in comments_book]
+  
     book_parametrs ={
         "Название": title_book.strip(),
         "Автор": avtor_book.strip(),
         "Картинка": full_image_url,
+        "Комментарии": comments_book_texts,
+
     }
     
     return book_parametrs
@@ -41,7 +47,6 @@ def save_book(response, filename, number_book, folder='books/'):
     pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
     file_path =  os.path.join(folder, f"{number_book}.{sanitize_filename(filename)}.txt")
 
-    print(file_path)
     with open(file_path, 'w', encoding="utf-8") as file:
         file.write(response.text)
 

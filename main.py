@@ -28,7 +28,7 @@ def parse_book_page(number_book, url_book, template_url):
     full_image_url = urljoin(template_url, image_url)
 
     comments_book = soup.find_all("div", class_="texts")
-    comments_book_texts = [comment_book.find("span", class_="black").text 
+    comments_texts_book = [comment_book.find("span", class_="black").text 
                            for comment_book in comments_book]
 
     book_genres = soup.find("span", class_="d_book").find_all("a")
@@ -39,7 +39,7 @@ def parse_book_page(number_book, url_book, template_url):
         "Название": title_book.strip(),
         "Автор": avtor_book.strip(),
         "Картинка": full_image_url,
-        "Комментарии": comments_book_texts,
+        "Комментарии": comments_texts_book,
         "Жанр": book_genres,
 
     }

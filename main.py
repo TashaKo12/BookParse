@@ -81,7 +81,7 @@ def main():
     args = parser.parse_args()
 
 
-    template_img_url = "http://tululu.org/images/nopic.gif"
+    template_img_url = "https://tululu.org/shots/nopic.gif"
     url_book = "https://tululu.org/b{}/"
     link_download_book = "https://tululu.org/txt.php"
 

@@ -31,11 +31,11 @@ def parse_book_page(number_book, url_book, template_url):
     comments_book_texts = [comment_book.find("span", class_="black").text 
                            for comment_book in comments_book]
 
-    book_genre = soup.find("span", class_="d_book").find_all("a")
-    book_genres = [genre_tag.text for genre_tag in book_genre]
+    book_genres = soup.find("span", class_="d_book").find_all("a")
+    book_genres = [genre_tag.text for genre_tag in book_genres]
 
 
-    book_parametrs ={
+    book_parametrs = {
         "Название": title_book.strip(),
         "Автор": avtor_book.strip(),
         "Картинка": full_image_url,

@@ -14,11 +14,8 @@ def check_for_redirect(response):
         raise requests.exceptions.HTTPError
 
 
-def parse_book_page(number_book, url_book, template_url):
-    response = requests.get(url_book.format(number_book))
-    response.raise_for_status()
-    check_for_redirect(response)
-    
+def parse_book_page(response, url_book, template_url):
+     
     soup = BeautifulSoup(response.text, 'lxml')
     title_tag = soup.find(id="content").find('h1').text
     
@@ -94,7 +91,12 @@ def main():
         try:
             response.raise_for_status()
             check_for_redirect(response)
-            book_parametrs = parse_book_page(number_book, url_book, template_img_url)
+
+            response = requests.get(url_book.format(number_book))
+            response.raise_for_status()
+            check_for_redirect(response)
+
+            book_parametrs = parse_book_page(response, url_book, template_img_url)
             save_book(response, book_parametrs["Название"], number_book)
             download_image(book_parametrs["Картинка"])
             

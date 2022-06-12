@@ -32,7 +32,7 @@ def parse_book_page(response, template_url):
     book_genres = [genre_tag.text for genre_tag in book_genres]
 
 
-    book_parametrs = {
+    book_params = {
         "Название": book_title.strip(),
         "Автор": book_author.strip(),
         "Картинка": full_image_url,
@@ -40,7 +40,7 @@ def parse_book_page(response, template_url):
         "Жанр": book_genres,
     }
 
-    return book_parametrs
+    return book_params
 
 
 def save_book(response, filename, book_number, folder='books/'):
@@ -76,7 +76,7 @@ def main():
     args = parser.parse_args()
 
 
-    url_book = "https://tululu.org/b{}/"
+    book_url = "https://tululu.org/b{}/"
     link_download_book = "https://tululu.org/txt.php"
 
 
@@ -89,11 +89,11 @@ def main():
             book_response.raise_for_status()
             check_for_redirect(book_response)
 
-            response = requests.get(url_book.format(book_number))
+            response = requests.get(book_url.format(book_number))
             response.raise_for_status()
             check_for_redirect(response)
 
-            book_parametrs = parse_book_page(response, url_book)
+            book_parametrs = parse_book_page(response, book_url)
             save_book(book_response, book_parametrs["Название"], book_number)
             download_image(book_parametrs["Картинка"])
 

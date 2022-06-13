@@ -32,7 +32,7 @@ def parse_book_page(response, template_url):
     book_genres = [genre_tag.text for genre_tag in book_genres]
 
 
-    book_params = {
+    book_parameters = {
         "Название": book_title.strip(),
         "Автор": book_author.strip(),
         "Картинка": full_image_url,
@@ -40,7 +40,7 @@ def parse_book_page(response, template_url):
         "Жанр": book_genres,
     }
 
-    return book_params
+    return book_parameters
 
 
 def save_book(response, filename, book_number, folder='books/'):
@@ -93,9 +93,9 @@ def main():
             response.raise_for_status()
             check_for_redirect(response)
 
-            book_parametrs = parse_book_page(response, book_url)
-            save_book(book_response, book_parametrs["Название"], book_number)
-            download_image(book_parametrs["Картинка"])
+            book parameters = parse_book_page(response, book_url)
+            save_book(book_response, book parameters["Название"], book_number)
+            download_image(book parameters["Картинка"])
 
         except requests.exceptions.HTTPError:
             print("Такой книги нет")
